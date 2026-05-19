@@ -20,8 +20,12 @@ class RaidService {
           .doc(_document);
 
       try {
+        // SYSTEM LOGIC: Atomic Transactions prevent race conditions in high-concurrency
+        // environments. If 50 players hit 'Join' at once, this ensures exactly 15 get in.
         return await _firestore.runTransaction<bool>((Transaction tx) async {
-          final DocumentSnapshot<Map<String, dynamic>> snapshot = await tx.get(docRef);
+          final DocumentSnapshot<Map<String, dynamic>> snapshot = await tx.get(
+            docRef,
+          );
 
           if (!snapshot.exists) {
             tx.set(docRef, <String, dynamic>{
@@ -31,7 +35,8 @@ class RaidService {
             return true;
           }
 
-          final Map<String, dynamic> data = snapshot.data() ?? <String, dynamic>{};
+          final Map<String, dynamic> data =
+              snapshot.data() ?? <String, dynamic>{};
           final int currentSlots = data[_slotsField] as int? ?? 0;
           final int maxAllowed = data[_maxField] as int? ?? defaultMaxSlots;
 

@@ -16,20 +16,32 @@ class WorldEventScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF0A0A1A),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF10102A),
+        elevation: 0,
+        backgroundColor: const Color(0xFF11112D),
         centerTitle: true,
         title: const Text(
           '⚔️  PROJECT AETHER',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 3,
+            fontSize: 14,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 4,
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: <Color>[
+              Color(0xFF0A0A1A),
+              Color(0xFF141432),
+            ],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
         child: Column(
           children: <Widget>[
             const CountdownTimer(),
@@ -43,6 +55,7 @@ class WorldEventScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
